@@ -10,9 +10,9 @@ phases:
       - echo Starting build at `date`
       - echo Building the Docker image...          
       - docker build -t yhyh .
-      - docker tag yhyh:latest 251785263877.dkr.ecr.us-east-1.amazonaws.com/yhyh:latest     
+      - docker tag yhyh:$CODEBUILD_BUILD_NUMBER 251785263877.dkr.ecr.us-east-1.amazonaws.com/yhyh:$CODEBUILD_BUILD_NUMBER     
   post_build:
     commands:
       - echo Completed build at `date`
       - echo Pushing the Docker image...
-      - docker push 251785263877.dkr.ecr.us-east-1.amazonaws.com/yhyh:latest
+      - docker push 251785263877.dkr.ecr.us-east-1.amazonaws.com/yhyh:$CODEBUILD_BUILD_NUMBER
