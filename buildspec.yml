@@ -13,6 +13,7 @@ phases:
       - docker build -t yhyh . > build.log 2>&1 || cat build.log
       - docker tag yhyh:$CODEBUILD_BUILD_NUMBER 251785263877.dkr.ecr.us-east-1.amazonaws.com/yhyh:$CODEBUILD_BUILD_NUMBER > tag.log 2>&1 || cat tag.log
 
+
   post_build:
     commands:
       - echo Completed build at `date`
