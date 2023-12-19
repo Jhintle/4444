@@ -4,18 +4,20 @@ phases:
   pre_build:
     commands:
       - echo Logging into ECR
-      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 251785263877.dkr.ecr.us-east-1.amazonaws.com
+      - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 039003090067.dkr.ecr.us-east-1.amazonaws.com
 
   build:
     commands:
       - echo Starting build at `date`
       - echo Building the Docker image...
-      - docker build -t yhyh . > build.log 2>&1 || cat build.log
-      - docker tag yhyh:$CODEBUILD_BUILD_NUMBER 251785263877.dkr.ecr.us-east-1.amazonaws.com/yhyh:$CODEBUILD_BUILD_NUMBER > tag.log 2>&1 || cat tag.log
+      - docker build -t udacity-repo . > build.log 2>&1 || cat build.log
+      - docker tag udacity-repo:latest 039003090067.dkr.ecr.us-east-1.amazonaws.com/udacity-repo:$CODEBUILD_BUILD_NUMBER > tag.log 2>&1 || cat tag.log          
 
 
   post_build:
     commands:
       - echo Completed build at `date`
       - echo Pushing the Docker image...
-      - docker push 251785263877.dkr.ecr.us-east-1.amazonaws.com/yhyh:$CODEBUILD_BUILD_NUMBER > push.log 2>&1 || cat push.log
+      - docker push 039003090067.dkr.ecr.us-east-1.amazonaws.com/udacity-repo:$CODEBUILD_BUILD_NUMBER > push.log 2>&1 || cat push.log
+
+
