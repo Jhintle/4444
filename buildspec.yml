@@ -5,14 +5,16 @@ phases:
     commands:
       - echo Logging into ECR
       - aws ecr get-login-password --region us-east-1 | docker login --username AWS --password-stdin 251785263877.dkr.ecr.us-east-1.amazonaws.com
+
   build:
     commands:
       - echo Starting build at `date`
-      - echo Building the Docker image...          
-      - docker build -t yhyh:$CODEBUILD_BUILD_NUMBER .
-      - docker tag yhyh:$CODEBUILD_BUILD_NUMBER 251785263877.dkr.ecr.us-east-1.amazonaws.com/yhyh:$CODEBUILD_BUILD_NUMBER     
+      - echo Building the Docker image...
+      - docker build -t yhyh . > build.log 2>&1 || cat build.log
+      - docker tag yhyh:$CODEBUILD_BUILD_NUMBER 251785263877.dkr.ecr.us-east-1.amazonaws.com/yhyh:$CODEBUILD_BUILD_NUMBER
+
   post_build:
     commands:
       - echo Completed build at `date`
       - echo Pushing the Docker image...
-      - docker push 251785263877.dkr.ecr.us-east-1.amazonaws.com/yhyh:$CODEBUILD_BUILD_NUMBER 
+      - docker push 251785263877.dkr.ecr.us-east-1.amazonaws.com/yhyh:$CODEBUILD_BUILD_NUMBER > push.log 2>&1 || cat push.log
